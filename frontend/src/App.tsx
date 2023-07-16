@@ -3,19 +3,19 @@ import WaveSurfer from 'wavesurfer.js';
 
 function App() {
   const waveformRef = useRef<HTMLDivElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const wavesurferRef = useRef<WaveSurfer | null>(null); // Store the Wavesurfer instance separately
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [audioFileURL, setAudioFileURL] = useState<string>('');
 
-  const backend = 'http://127.0.0.1:5000';
+  const backend: string = 'http://127.0.0.1:5000';
 
   useEffect(() => {
     if (waveformRef.current) {
-      const wavesurfer = WaveSurfer.create({
+      const wavesurfer: WaveSurfer = WaveSurfer.create({
         container: waveformRef.current,
         waveColor: '#4F4A85',
         progressColor: '#383351',
-        url: './src/test.mp3',
       });
 
       wavesurferRef.current = wavesurfer; // Assign the Wavesurfer instance to the ref
@@ -29,6 +29,24 @@ function App() {
     };
   }, []);
 
+  const loadAudioFile = async (fileUrl: string) => {
+    if (wavesurferRef.current) {
+      try {
+        const response = await fetch(fileUrl);
+        if (response.ok) {
+          const blob = await response.blob();
+          const audioUrl = URL.createObjectURL(blob);
+          wavesurferRef.current.load(audioUrl);
+          setAudioFileURL(audioUrl);
+        }
+      } catch (error) {
+        console.log('Error:', error);
+        // Handle error
+      }
+    }
+  };
+
+  // Handle play/pause of the audio reader
   const handlePlay = () => {
     if (wavesurferRef.current) {
       if (!isPlaying) {
@@ -40,6 +58,7 @@ function App() {
     }
   };
 
+  // File uploading logic
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setSelectedFile(event.target.files[0]);
@@ -56,12 +75,19 @@ function App() {
           method: 'POST',
           body: formData,
         });
+
         // File uploaded successfully
-        const data = await response.json();
-        console.log(data); // Log the response data
+        if (response.ok) {
+          const responseData = await response.json();
+          const fileUrl = responseData.file_url;
+          loadAudioFile(fileUrl);
+        }
+        else {
+          console.log('Error:', response.statusText);
+        }
 
       } catch (error) {
-        console.log(error)
+        console.log('Error:', error);
         // Handle error
       }
     }
