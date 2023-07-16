@@ -1,12 +1,14 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 
+interface ResponseData {
+  file_url: string;
+}
 function App() {
   const waveformRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const wavesurferRef = useRef<WaveSurfer | null>(null); // Store the Wavesurfer instance separately
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [audioFileURL, setAudioFileURL] = useState<string>('');
 
   const backend: string = 'http://127.0.0.1:5000';
 
@@ -29,15 +31,14 @@ function App() {
     };
   }, []);
 
-  const loadAudioFile = async (fileUrl: string) => {
+  const loadAudioFile: (fileUrl: string) => Promise<void> = async (fileUrl: string) => {
     if (wavesurferRef.current) {
       try {
-        const response = await fetch(fileUrl);
+        const response: Response = await fetch(fileUrl);
         if (response.ok) {
-          const blob = await response.blob();
-          const audioUrl = URL.createObjectURL(blob);
+          const blob: Blob = await response.blob();
+          const audioUrl: string = URL.createObjectURL(blob);
           wavesurferRef.current.load(audioUrl);
-          setAudioFileURL(audioUrl);
         }
       } catch (error) {
         console.log('Error:', error);
@@ -47,7 +48,7 @@ function App() {
   };
 
   // Handle play/pause of the audio reader
-  const handlePlay = () => {
+  const handlePlay: () => void = () => {
     if (wavesurferRef.current) {
       if (!isPlaying) {
         wavesurferRef.current.play(); // Access the Wavesurfer instance directly
@@ -65,21 +66,21 @@ function App() {
     }
   };
 
-  const handleFileUpload = async () => {
+  const handleFileUpload: () => Promise<void> = async () => {
     if (selectedFile) {
-      const formData = new FormData();
+      const formData: FormData = new FormData();
       formData.append('file', selectedFile);
 
       try {
-        const response = await fetch(`${backend}/upload`, {
+        const response: Response = await fetch(`${backend}/upload`, {
           method: 'POST',
           body: formData,
         });
 
         // File uploaded successfully
         if (response.ok) {
-          const responseData = await response.json();
-          const fileUrl = responseData.file_url;
+          const data: ResponseData = await response.json();
+          const fileUrl: string = data.file_url;
           loadAudioFile(fileUrl);
         }
         else {
