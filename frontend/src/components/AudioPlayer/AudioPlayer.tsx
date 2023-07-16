@@ -1,19 +1,19 @@
-import React, { useState, useRef, useEffect, ChangeEvent } from 'react';
+import { useState, useRef, useEffect, ChangeEvent } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 
 interface IResponseData {
     file_url: string;
-  }
+}
 
 const AudioPlayer = () => {
+
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
 
     const waveformRef = useRef<HTMLDivElement>(null);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const wavesurferRef = useRef<WaveSurfer | null>(null); // Store the Wavesurfer instance separately
 
-    const backend: string = 'http://127.0.0.1:5000';
-    
-    const [selectedFile, setSelectedFile] = useState <File | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     useEffect(() => {
         if (waveformRef.current) {
@@ -46,7 +46,7 @@ const AudioPlayer = () => {
             formData.append('file', selectedFile);
 
             try {
-                const response: Response = await fetch(`${backend}/upload`, {
+                const response: Response = await fetch(`${backendURL}/upload`, {
                     method: 'POST',
                     body: formData,
                 });
