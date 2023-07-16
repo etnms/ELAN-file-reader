@@ -1,12 +1,13 @@
 import os
 from flask import Flask, request, jsonify, send_file, send_from_directory
 from flask_cors import CORS, cross_origin
-
+import elan_reader as ER
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+audio_extensions = ['.mp3', '.wav']
 
 @app.route('/')
 def hello_world():
@@ -23,11 +24,10 @@ def upload_file():
     file_location = f'upload/{file.filename}'
     file.save(file_location)  # Provide the desired path to save the file
     file_url = f'{request.base_url}/{file_location}'
-    print(file_url)
-    audio_extensions = ['.mp3', '.wav']
+
     if (extension == '.eaf'):
-        print(extension)
-        return jsonify({'message': 'File uploaded successfully'})
+        tiers = ER.get_tiers(file_location)
+        return jsonify({'message': 'File uploaded successfully', 'tiers' : tiers})
 
     if (extension in audio_extensions):
 
