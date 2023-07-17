@@ -9,9 +9,11 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 audio_extensions = ['.mp3', '.wav']
 
+
 @app.route('/')
 def hello_world():
     return 'Hello world'
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -27,16 +29,17 @@ def upload_file():
 
     if (extension == '.eaf'):
         tiers = ER.get_tiers(file_location)
-        return jsonify({'message': 'File uploaded successfully', 'tiers' : tiers})
+        timeslots = ER.get_time_slots(file_location)
+        return jsonify({'message': 'File uploaded successfully', 'tiers': tiers, 'elanData': timeslots})
 
     if (extension in audio_extensions):
-
         return jsonify({'file_url': file_url})
 
     else:
-        return jsonify({'message' : 'Error extension file'})
+        return jsonify({'message': 'Error extension file'})
 
-@app.route('/upload/<path:filename>', methods = ['GET'])
+
+@app.route('/upload/<path:filename>', methods=['GET'])
 def serve_file(filename):
     path = app.root_path
     return send_from_directory(path, filename)

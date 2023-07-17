@@ -7,7 +7,7 @@ const TierDropdown = (props: ITierDropdownProps) => {
 
     const renderTiers = () => {
         return tiers.map((element: string, index: number) => {
-            return <option key={element + index}>{element}</option>
+            return <option key={`${element}${index}`}>{element}</option>
         })
     }
     return (

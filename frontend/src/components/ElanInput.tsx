@@ -1,17 +1,19 @@
 import { ChangeEvent, useState } from 'react';
 
 interface IResponseData {
-  tiers: string[]
+  tiers: string[],
+  elanData: any
 }
 
 interface IPropsElanInput {
-  setTierList: Function;
+  setTierList: Function,
+  setElanData: Function
 }
 
 const ElanInput = (props: IPropsElanInput) => {
 
-  const { setTierList } = props;
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const { setTierList, setElanData } = props;
+  const backendURL: string = import.meta.env.VITE_BACKEND_URL;
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +37,7 @@ const ElanInput = (props: IPropsElanInput) => {
         if (response.ok) {
           const data: IResponseData = await response.json();
           setTierList(data.tiers);
+          setElanData(data.elanData);
           console.log(data)
         }
         else {

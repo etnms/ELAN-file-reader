@@ -7,7 +7,7 @@ interface IResponseData {
 
 const AudioPlayer = () => {
 
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const backendURL: string = import.meta.env.VITE_BACKEND_URL;
 
     const waveformRef = useRef<HTMLDivElement>(null);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
