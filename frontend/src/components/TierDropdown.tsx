@@ -1,9 +1,6 @@
-interface ITierDropdownProps {
-    tiers: string[]
-}
+import { TierDropdownProps } from "../utils/types";
 
-const TierDropdown = (props: ITierDropdownProps) => {
-    const { tiers } = props;
+const TierDropdown: React.FC<TierDropdownProps> = ({tiers}) => {
 
     const renderTiers = () => {
         return tiers.map((element: string, index: number) => {

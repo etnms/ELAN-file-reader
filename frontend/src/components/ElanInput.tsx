@@ -1,18 +1,22 @@
 import { ChangeEvent, useState } from 'react';
 
-interface IResponseData {
+interface ResponseData {
   tiers: string[],
-  elanData: any
+  elanData: ElanData
 }
 
-interface IPropsElanInput {
+interface ElanData {
+  sentence: string,
+  timeStamp: string
+}
+
+interface PropsElanInput {
   setTierList: Function,
   setElanData: Function
 }
 
-const ElanInput = (props: IPropsElanInput) => {
+const ElanInput: React.FC<PropsElanInput> = ({setTierList, setElanData}) => {
 
-  const { setTierList, setElanData } = props;
   const backendURL: string = import.meta.env.VITE_BACKEND_URL;
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -35,18 +39,19 @@ const ElanInput = (props: IPropsElanInput) => {
 
         // File uploaded successfully
         if (response.ok) {
-          const data: IResponseData = await response.json();
+          const data: ResponseData = await response.json();
           setTierList(data.tiers);
           setElanData(data.elanData);
-          console.log(data)
         }
         else {
+          // Handle error
           console.log('Error:', response.statusText);
         }
 
       } catch (error) {
-        console.log('Error:', error);
         // Handle error
+        console.log('Error:', error);
+
       }
     }
   };

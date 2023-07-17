@@ -1,24 +1,23 @@
-import { useEffect } from 'react';
+import { TranscriptionProps } from "../utils/types";
 
-interface IElanData {
-    elanData: any
-}
+const Transcription: React.FC<TranscriptionProps> = ({ elanData = {} }) => {
+    const dictionaryArray = Object.entries(elanData).map(([sentence, timeValue]) => ({
+        sentence,
+        timeValue,
+    }));
 
-const Transcription = (props: IElanData) => {
-
-    const { elanData } = props;
-
-    const displayData = () => {
-        if (elanData === undefined) return; // If no data do nothing
-
-        return Object.keys(elanData).map((key: any) => {
-            return <p>{elanData[key]} - {key}</p>
-        })
-    }
+    const sortedDictionary = dictionaryArray.sort((a, b) => a.timeValue.localeCompare(b.timeValue));
 
     return (
         <div>
-            {displayData()}
+            <div>
+                {sortedDictionary.map((entry) => (
+                    <div key={entry.sentence}>
+                        <span>{entry.sentence}: </span>
+                        <span>{entry.timeValue}</span>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

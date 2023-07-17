@@ -4,10 +4,14 @@ import ElanInput from './components/ElanInput';
 import TierDropdown from './components/TierDropdown';
 import Transcription from './components/Transcription';
 
-function App() {
+interface Dictionary {
+  [key: string]: string;
+}
+
+const App = () => {
 
   const [tierList, setTierList] = useState<string[]>([]);
-  const [elanData, setElanData] = useState<any>();
+  const [elanData, setElanData] = useState<Dictionary>();
 
   return (
     <>
