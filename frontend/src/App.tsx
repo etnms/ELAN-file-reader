@@ -8,7 +8,7 @@ interface Dictionary {
   [key: string]: string;
 }
 
-const App = () => {
+const App: React.FC = () => {
 
   const [tierList, setTierList] = useState<string[]>([]);
   const [elanData, setElanData] = useState<Dictionary>();

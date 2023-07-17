@@ -1,12 +1,12 @@
-import { TranscriptionProps } from "../utils/types";
+import { Dictionary, TranscriptionProps } from "../utils/types";
 
 const Transcription: React.FC<TranscriptionProps> = ({ elanData = {} }) => {
-    const dictionaryArray = Object.entries(elanData).map(([sentence, timeValue]) => ({
+    const dictionaryArray: Dictionary[] = Object.entries(elanData).map(([sentence, timeValue]) => ({
         sentence,
         timeValue,
     }));
 
-    const sortedDictionary = dictionaryArray.sort((a, b) => a.timeValue.localeCompare(b.timeValue));
+    const sortedDictionary: Dictionary[] = dictionaryArray.sort((a, b) => a.timeValue.localeCompare(b.timeValue));
 
     return (
         <div>

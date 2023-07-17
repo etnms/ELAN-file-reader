@@ -5,7 +5,7 @@ interface IResponseData {
     file_url: string;
 }
 
-const AudioPlayer = () => {
+const AudioPlayer: React.FC = () => {
 
     const backendURL: string = import.meta.env.VITE_BACKEND_URL;
 
