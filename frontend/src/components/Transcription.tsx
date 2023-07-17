@@ -6,7 +6,7 @@ const Transcription: React.FC<TranscriptionProps> = ({ elanData = {} }) => {
         timeValue,
     }));
 
-    const sortedDictionary: Dictionary[] = dictionaryArray.sort((a, b) => a.timeValue.localeCompare(b.timeValue));
+    const sortedDictionary: Dictionary[] = dictionaryArray.sort((a: Dictionary, b: Dictionary) => a.timeValue.localeCompare(b.timeValue));
 
     return (
         <div>
