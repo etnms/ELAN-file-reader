@@ -1,17 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
 import ElanInput from './components/ElanInput';
 import TierDropdown from './components/TierDropdown';
 import Transcription from './components/Transcription';
+import { TierData } from './utils/types';
 
-interface Dictionary {
-  [key: string]: string;
-}
 
 const App: React.FC = () => {
 
   const [tierList, setTierList] = useState<string[]>([]);
-  const [elanData, setElanData] = useState<Dictionary>();
+  const [elanData, setElanData] = useState<TierData>();
+
+  useEffect(() => {
+    console.log(elanData)
+  }, [elanData])
 
   return (
     <>
@@ -20,7 +22,7 @@ const App: React.FC = () => {
       <div>
         <ElanInput setTierList={setTierList} setElanData={setElanData} />
         <TierDropdown tiers={tierList} />
-        <Transcription elanData={elanData}/>
+        <Transcription elanData={elanData} tierList={tierList}/>
       </div>
     </>
   );

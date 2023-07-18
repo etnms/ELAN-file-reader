@@ -9,3 +9,12 @@ export interface TranscriptionProps {
 export interface TierDropdownProps {
     tiers: string[]
 }
+
+export interface TierData {
+    [tierName: string]: {
+        annotation_id: string,
+        time_slot_ref1: string,
+        time_slot_ref2: string,
+        annotation_value: string,
+    }
+}

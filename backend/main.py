@@ -29,8 +29,8 @@ def upload_file():
 
     if (extension == '.eaf'):
         tiers = ER.get_tiers(file_location)
-        timeslots = ER.get_time_slots(file_location)
-        return jsonify({'message': 'File uploaded successfully', 'tiers': tiers, 'elanData': timeslots})
+        elan_data = ER.get_elan_slots(file_location)
+        return jsonify({'message': 'File uploaded successfully', 'tiers': tiers, 'elanData': elan_data})
 
     if (extension in audio_extensions):
         return jsonify({'file_url': file_url})

@@ -2,12 +2,7 @@ import { ChangeEvent, useState } from 'react';
 
 interface ResponseData {
   tiers: string[],
-  elanData: ElanData
-}
-
-interface ElanData {
-  sentence: string,
-  timeStamp: string
+  elanData: any
 }
 
 interface PropsElanInput {
