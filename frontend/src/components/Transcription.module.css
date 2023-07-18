@@ -1,0 +1,16 @@
+.common {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    height: 2rem;
+    width: 60%;
+}
+
+.even {
+    background-color: lightblue;
+}
+
+.odd {
+    background-color: lightgray;
+}

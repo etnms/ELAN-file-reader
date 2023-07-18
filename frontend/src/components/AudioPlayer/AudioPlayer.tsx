@@ -15,6 +15,10 @@ const AudioPlayer: React.FC = () => {
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+    const [currentTime, setCurrentTime] = useState<number>(0);
+    const [startTime, setStartTime] = useState<number>(0);
+    const [endTime, setEndTime] = useState<number>(0);
+
     useEffect(() => {
         if (waveformRef.current) {
             const wavesurfer: WaveSurfer = WaveSurfer.create({
@@ -24,6 +28,14 @@ const AudioPlayer: React.FC = () => {
             });
 
             wavesurferRef.current = wavesurfer; // Assign the Wavesurfer instance to the ref
+
+            wavesurfer.on('audioprocess', () => {
+                setCurrentTime(wavesurfer.getCurrentTime());
+                setEndTime(wavesurfer.getDuration());
+            });
+
+            setStartTime(0);
+           
         }
 
         // Cleanup
@@ -97,6 +109,13 @@ const AudioPlayer: React.FC = () => {
         }
     };
 
+    const formatTime = (timeInSeconds: number) => {
+        const hours: number = Math.floor(timeInSeconds / 3600);
+        const minutes: number = Math.floor((timeInSeconds % 3600) / 60);
+        const seconds: number = Math.floor(timeInSeconds % 60);
+      
+        return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      };
 
     return (
         <>
@@ -104,9 +123,11 @@ const AudioPlayer: React.FC = () => {
                 <input type='file' onChange={handleFileChange} />
                 <button onClick={handleFileUpload}>Upload audio file</button>
             </div>
-            <div>
+            <div><span>Begin time: {formatTime(startTime)}</span>
                 <div ref={waveformRef}></div>
+                <span>End time: {formatTime(endTime)}</span>
                 <button onClick={handlePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
+                <p>{formatTime(currentTime)}</p>
             </div>
         </>
     );

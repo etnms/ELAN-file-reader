@@ -1,4 +1,6 @@
 import React from 'react';
+import styles from './Transcription.module.css';
+
 const Transcription: React.FC<any> = ({ elanData = {}, tierList }) => {
 
     return (
@@ -8,11 +10,9 @@ const Transcription: React.FC<any> = ({ elanData = {}, tierList }) => {
                 return <div key={objectname}>
                     <h2>{objectname}</h2>
                     {objects.map((obj: any, index: number) => (
-                        <div key={index}>
+                        <div key={index} className={`${styles.common} ${index % 2 === 0 ? styles.even : styles.odd}`}>
                             {/* Render the specific properties of the object */}
-                            <span>{obj.annotation_value}</span>
-                            <span>{obj.time_slot_ref1}</span>
-                            <span>{obj.time_slot_ref2}</span>
+                            <span>{obj.annotation_value} {obj.time_slot_ref1} - {obj.time_slot_ref2}</span>
                         </div>
                     ))}
                 </div>
