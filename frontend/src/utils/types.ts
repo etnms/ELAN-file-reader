@@ -12,7 +12,6 @@ export interface TierDropdownProps {
 
 export interface TierData {
     [tierName: string]: {
-        annotation_id: string,
         time_slot_ref1: string,
         time_slot_ref2: string,
         annotation_value: string,
