@@ -1,3 +1,13 @@
+.display {
+    display: flex;
+    background-color: red;
+    justify-content: center;
+}
+
+.display-name {
+    flex: 1;
+    text-align: center;
+}
 .common {
     display: flex;
     align-items: center;
@@ -5,6 +15,7 @@
     color: black;
     height: 2rem;
     width: 60%;
+    flex: 4;
 }
 
 .even {

@@ -2,10 +2,6 @@ export interface Dictionary {
     [key: string]: string;
 }
 
-export interface TranscriptionProps {
-    elanData?: Dictionary;
-}
-
 export interface TierDropdownProps {
     tiers: string[]
 }
@@ -15,5 +11,11 @@ export interface TierData {
         time_slot_ref1: string,
         time_slot_ref2: string,
         annotation_value: string,
-    }
+    }[]
+}
+
+export interface TranscriptionProps {
+    tierList: string[],
+    elanData?: TierData,
+    currentTime: any
 }

@@ -5,7 +5,12 @@ interface IResponseData {
     file_url: string;
 }
 
-const AudioPlayer: React.FC = () => {
+interface AudioPlayerProps {
+    currentTime: any,
+    setCurrentTime: Function
+}
+
+const AudioPlayer: React.FC<AudioPlayerProps> = ( {currentTime, setCurrentTime}) => {
 
     const backendURL: string = import.meta.env.VITE_BACKEND_URL;
 
@@ -15,7 +20,7 @@ const AudioPlayer: React.FC = () => {
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    const [currentTime, setCurrentTime] = useState<number>(0);
+
     const [startTime, setStartTime] = useState<number>(0);
     const [endTime, setEndTime] = useState<number>(0);
 

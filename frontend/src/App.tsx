@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
 import ElanInput from './components/ElanInput';
 import TierDropdown from './components/TierDropdown';
@@ -10,19 +10,15 @@ const App: React.FC = () => {
 
   const [tierList, setTierList] = useState<string[]>([]);
   const [elanData, setElanData] = useState<TierData>();
-
-  useEffect(() => {
-    console.log(elanData)
-  }, [elanData])
-
+  const [currentTime, setCurrentTime] = useState<any>();
   return (
     <>
-      <p>Test</p>
-      <AudioPlayer />
+      <h1>ELAN file reader</h1>
+      <AudioPlayer setCurrentTime={setCurrentTime} currentTime= {currentTime} />
       <div>
         <ElanInput setTierList={setTierList} setElanData={setElanData} />
         <TierDropdown tiers={tierList} />
-        <Transcription elanData={elanData} tierList={tierList}/>
+        <Transcription elanData={elanData} tierList={tierList} currentTime={currentTime}/>
       </div>
     </>
   );
