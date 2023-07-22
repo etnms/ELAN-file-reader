@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect, ChangeEvent } from 'react';
 import WaveSurfer from 'wavesurfer.js';
+import InputStyle from '../FileInput.module.css';
+import styles from './AudioPlayer.module.css';
 
 interface IResponseData {
     file_url: string;
@@ -10,7 +12,7 @@ interface AudioPlayerProps {
     setCurrentTime: Function
 }
 
-const AudioPlayer: React.FC<AudioPlayerProps> = ( {currentTime, setCurrentTime}) => {
+const AudioPlayer: React.FC<AudioPlayerProps> = ({ currentTime, setCurrentTime }) => {
 
     const backendURL: string = import.meta.env.VITE_BACKEND_URL;
 
@@ -40,7 +42,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ( {currentTime, setCurrentTime})
             });
 
             setStartTime(0);
-           
+
         }
 
         // Cleanup
@@ -118,20 +120,25 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ( {currentTime, setCurrentTime})
         const hours: number = Math.floor(timeInSeconds / 3600);
         const minutes: number = Math.floor((timeInSeconds % 3600) / 60);
         const seconds: number = Math.floor(timeInSeconds % 60);
-      
+
         return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-      };
+    };
 
     return (
         <>
             <div>
-                <input type='file' onChange={handleFileChange} />
-                <button onClick={handleFileUpload}>Upload audio file</button>
+                <div className={InputStyle.parent}>
+                    <div className={InputStyle['file-upload']}>
+                        <label htmlFor='input-aduio'>Audio</label>
+                        <input type='file' onChange={handleFileChange} name='input-audio' />
+                    </div>
+                    <button onClick={handleFileUpload}>Upload audio file</button>
+                </div>
             </div>
             <div><span>Begin time: {formatTime(startTime)}</span>
                 <div ref={waveformRef}></div>
                 <span>End time: {formatTime(endTime)}</span>
-                <button onClick={handlePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
+                <button onClick={handlePlay} className={styles.button}>{isPlaying ? 'Pause' : 'Play'}</button>
                 <p>{formatTime(currentTime)}</p>
             </div>
         </>

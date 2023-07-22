@@ -24,16 +24,17 @@ const Transcription: React.FC<TranscriptionProps> = ({ elanData = {}, tierList, 
             <div className={styles['display-name']}>
               {tierName}
             </div>
-              {filteredData.map((obj, index) => (
-                <div
-                  key={index}
-                  className={`${styles.common} ${index % 2 === 0 ? styles.even : styles.odd}`}
-                >
-                  <span>
-                    {obj.annotation_value} {obj.time_slot_ref1} - {obj.time_slot_ref2}
-                  </span>
-                </div>
-              ))}
+            {filteredData.map((obj, index) => (
+              <div
+                key={index}
+                className={`${styles.common} ${index % 2 === 0 ? styles.even : styles.odd}`}
+              >
+                <span>
+                  {obj.annotation_value}
+                </span>
+              </div>
+            ))}
+            {/*filteredDataAfter?.annotation_value*/}
 
           </div>
         );

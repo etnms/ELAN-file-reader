@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import InputStyle from './FileInput.module.css';
 
 interface ResponseData {
   tiers: string[],
@@ -10,7 +11,7 @@ interface PropsElanInput {
   setElanData: Function
 }
 
-const ElanInput: React.FC<PropsElanInput> = ({setTierList, setElanData}) => {
+const ElanInput: React.FC<PropsElanInput> = ({ setTierList, setElanData }) => {
 
   const backendURL: string = import.meta.env.VITE_BACKEND_URL;
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -52,9 +53,13 @@ const ElanInput: React.FC<PropsElanInput> = ({setTierList, setElanData}) => {
   };
   return (
     <div>
-      <label htmlFor='input-eaf'>EAF file</label>
-      <input type='file' onChange={handleFileChange} name='input-eaf' />
-      <button onClick={handleFileUpload}>Upload eaf</button>
+      <div className={InputStyle['parent']}>
+        <div className={InputStyle['file-upload']}>
+          <label htmlFor='input-eaf'>EAF file</label>
+          <input type='file' onChange={handleFileChange} name='input-eaf' />
+        </div>
+        <button onClick={handleFileUpload}>Upload eaf</button>
+      </div>
     </div>
   );
 };
