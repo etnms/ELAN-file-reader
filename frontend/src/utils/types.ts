@@ -1,11 +1,3 @@
-export interface Dictionary {
-    [key: string]: string;
-}
-
-export interface TierDropdownProps {
-    tiers: string[]
-}
-
 export interface TierData {
     [tierName: string]: {
         time_slot_ref1: string,
@@ -14,8 +6,11 @@ export interface TierData {
     }[]
 }
 
-export interface TranscriptionProps {
-    tierList: string[],
-    elanData?: TierData,
-    currentTime: any
+export interface CurrentTime {
+    currentTime: number
+}
+
+export interface SelectedFile {
+
+    fileUrl: string,
 }

@@ -1,31 +1,30 @@
 import { useEffect, useState } from 'react';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
-import ElanInput from './components/ElanInput';
-import TierDropdown from './components/TierDropdown';
 import Transcription from './components/Transcription';
-import { TierData } from './utils/types';
 import Title from './components/Title';
 import styles from './App.module.css';
+import UploadFiles from './components/UploadFiles';
+import { Provider } from 'react-redux';
+import { store } from "./app/store";
 
 const App: React.FC = () => {
-
-  const [tierList, setTierList] = useState<string[]>([]);
-  const [elanData, setElanData] = useState<TierData>();
-  const [currentTime, setCurrentTime] = useState<any>();
 
   useEffect(() => {
     document.title = "ELAN file reader";
   })
+
+  const [audioFile, setAudioFile] = useState<File | null>(null);
+  const [elanFile, setElanFile] = useState<File | null>(null);
+
   return (
-    <main className={styles.main}>
-      <Title/>
-      <AudioPlayer setCurrentTime={setCurrentTime} currentTime= {currentTime} />
-      <div>
-        <ElanInput setTierList={setTierList} setElanData={setElanData} />
-        {/*<TierDropdown tiers={tierList} />*/}
-        <Transcription elanData={elanData} tierList={tierList} currentTime={currentTime}/>
-      </div>
-    </main>
+    <Provider store={store}>
+      <main className={styles.main}>
+        <Title />
+        <UploadFiles audioFile={audioFile} setAudioFile={setAudioFile} elanFile={elanFile} setElanFile={setElanFile}/>
+        <AudioPlayer />
+        <Transcription />
+      </main>
+    </Provider>
   );
 }
 
