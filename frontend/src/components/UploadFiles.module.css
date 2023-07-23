@@ -1,4 +1,10 @@
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .container {
     display: flex;
-    
+    padding: 2rem;
+    gap: 1rem;
 }

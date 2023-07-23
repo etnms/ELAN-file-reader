@@ -15,7 +15,7 @@ const FileInput: React.FC<FileInputProps> = ({handleFileChange,handleFileupload,
                     <label htmlFor='input-aduio'>{title}</label>
                     <input type='file' onChange={handleFileChange} name='input-audio' />
                 </div>
-                <button onClick={handleFileupload}>upload</button>
+                <button onClick={handleFileupload} className={styles.btn}>Upload</button>
             </div>
         </div>
     );

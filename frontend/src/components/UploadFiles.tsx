@@ -1,9 +1,9 @@
 import React, { ChangeEvent } from 'react';
 import FileInput from './FileInput';
 import styles from './UploadFiles.module.css';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch } from '../app/hooks';
 import { setElanData, setTierList } from './features/ElanDataSlice';
-import { setFileUrl} from './features/SelectedFilesSlice';
+import { setFileUrl } from './features/SelectedFilesSlice';
 
 interface UploadFilesProps {
   audioFile: File | null,
@@ -89,9 +89,12 @@ const UploadFiles: React.FC<UploadFilesProps> = ({ audioFile, setAudioFile, elan
   };
 
   return (
-    <div className={styles.container}>
-      <FileInput handleFileupload={handleAudioFileUpload} handleFileChange={handleAudioFileChange} title='audio' />
-      <FileInput handleFileupload={handleElanFileUpload} handleFileChange={handleElanFileChange} title='eaf' />
+    <div className={styles['upload-section']}>
+      <h3>Upload your audio file and its corresponding elan file:</h3>
+      <div className={styles.container}>
+        <FileInput handleFileupload={handleAudioFileUpload} handleFileChange={handleAudioFileChange} title='Audio' />
+        <FileInput handleFileupload={handleElanFileUpload} handleFileChange={handleElanFileChange} title='Eaf' />
+      </div>
     </div>
   );
 };
