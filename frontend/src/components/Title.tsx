@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Title.module.css';
 
-const Title = () => {
+const Title: React.FC = () => {
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>ELAN file reader</h1>

@@ -11,6 +11,5 @@ export interface CurrentTime {
 }
 
 export interface SelectedFile {
-
     fileUrl: string,
 }

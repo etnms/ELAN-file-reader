@@ -88,15 +88,17 @@ const AudioPlayer: React.FC = () => {
         }
     };
 
-
-
     return (
-        <div>
-            <span>Begin time: {formatTime(startTime)}</span>
-            <div ref={waveformRef}></div>
-            <span>End time: {formatTime(endTime)}</span>
-            <button onClick={handlePlay} className={styles.button}>{isPlaying ? <PauseIcon /> : <PlayArrowIcon />}</button>
-            <p>{formatTime(currentTime)}</p>
+        <div className={styles['container-player']}>
+            <div className={styles['container-audio']}>
+                <p className={styles.text}>Begin time: {formatTime(startTime)}</p>
+                <div ref={waveformRef} className={styles.wave}></div>
+                <p className={styles.text}>End time: {formatTime(endTime)}</p>
+            </div>
+            <div className={styles['container-buttons']}>
+                <button onClick={handlePlay} className={styles.button}>{isPlaying ? <PauseIcon /> : <PlayArrowIcon />}</button>
+                <p>{formatTime(currentTime)}</p>
+            </div>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import FileInput from './FileInput';
 import styles from './UploadFiles.module.css';
 import { useAppDispatch } from '../app/hooks';
@@ -11,24 +11,22 @@ interface UploadFilesProps {
   elanFile: File | null,
   setElanFile: Function
 }
+
 const UploadFiles: React.FC<UploadFilesProps> = ({ audioFile, setAudioFile, elanFile, setElanFile }) => {
 
   const backendURL: string = import.meta.env.VITE_BACKEND_URL;
 
   const dispatch = useAppDispatch()
 
-  const handleAudioFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setAudioFile(event.target.files[0]);
-    }
-  };
+  const [audioFileName, setAudioFileName] = useState<string>('');
+  const [elanFileName, setElanFileName] = useState<string>('');
 
-
-  const handleElanFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>, setFileName: Function, setFile: Function) => {
     if (event.target.files && event.target.files.length > 0) {
-      setElanFile(event.target.files[0]);
+      setFileName(event.target.files[0].name);
+      setFile(event.target.files[0])
     }
-  };
+  }
 
 
   const handleElanFileUpload: () => Promise<void> = async () => {
@@ -92,8 +90,8 @@ const UploadFiles: React.FC<UploadFilesProps> = ({ audioFile, setAudioFile, elan
     <div className={styles['upload-section']}>
       <h3>Upload your audio file and its corresponding elan file:</h3>
       <div className={styles.container}>
-        <FileInput handleFileupload={handleAudioFileUpload} handleFileChange={handleAudioFileChange} title='Audio' />
-        <FileInput handleFileupload={handleElanFileUpload} handleFileChange={handleElanFileChange} title='Eaf' />
+        <FileInput handleFileupload={handleAudioFileUpload} handleFileChange={(e) => handleFileChange(e, setAudioFileName, setAudioFile)} title='Audio' fileName={audioFileName} />
+        <FileInput handleFileupload={handleElanFileUpload} handleFileChange={(e) => handleFileChange(e, setElanFileName, setElanFile)} title='Eaf' fileName={elanFileName} />
       </div>
     </div>
   );
