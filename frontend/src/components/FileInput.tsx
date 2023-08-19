@@ -6,9 +6,10 @@ interface FileInputProps {
     handleFileupload: MouseEventHandler,
     title: string,
     fileName: string,
+    errorText: string
 }
 
-const FileInput: React.FC<FileInputProps> = ({ handleFileChange, handleFileupload, title, fileName }) => {
+const FileInput: React.FC<FileInputProps> = ({ handleFileChange, handleFileupload, title, fileName, errorText }) => {
 
     return (
         <div>
@@ -19,6 +20,7 @@ const FileInput: React.FC<FileInputProps> = ({ handleFileChange, handleFileuploa
                     <p> {fileName === '' ? 'No file' : `File chosen: ${fileName}`}</p>
                 </div>
                 <button onClick={handleFileupload} className={styles.btn}>Upload</button>
+                <p className={styles.error}>{errorText}</p>
             </div>
         </div>
     );

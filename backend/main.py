@@ -24,20 +24,20 @@ def upload_file():
     #filename = split_filename[0]
     extension = split_filename[1]
     file_location = f'upload/{file.filename}'
+    file.save(file_location)  # Provide the desired path to save the file
 
     if (extension == '.eaf' and filetype == 'elan'):
         tiers = ER.get_tiers(file_location)
         elan_data = ER.get_elan_data(file_location)
-        file.save(file_location)  # Provide the desired path to save the file
+
         return jsonify({'message': 'File uploaded successfully', 'tiers': tiers, 'elanData': elan_data})
 
     if (extension in audio_extensions and filetype == 'audio'):
         file_url = f'{request.base_url}/{file_location}'
-        file.save(file_location)  # Provide the desired path to save the file
         return jsonify({'file_url': file_url})
 
     else:
-        return jsonify({'message': 'Error extension file'})
+        return jsonify({'message': 'Error extension file'}), 500
 
 
 @app.route('/upload/<path:filename>', methods=['GET'])

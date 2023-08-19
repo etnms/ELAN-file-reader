@@ -1,5 +1,5 @@
 .parent {
-    width: 450px;
+    width: 550px;
     margin: auto;
     padding: 2rem;
     background: #ffffff;
@@ -45,4 +45,10 @@
 .btn:hover {
     transform: scale(1.05);
     transition: 200ms;
+}
+
+.error {
+    text-align: center;
+    color: red;
+    height: 1rem;
 }

@@ -21,6 +21,9 @@ const UploadFiles: React.FC<UploadFilesProps> = ({ audioFile, setAudioFile, elan
   const [audioFileName, setAudioFileName] = useState<string>('');
   const [elanFileName, setElanFileName] = useState<string>('');
 
+  const [errorTextAudio, setErrorTextAudio] = useState<string>('');
+  const [errorTextElan, setErrorTextElan] = useState<string>('');
+
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>, setFileName: Function, setFile: Function) => {
     if (event.target.files && event.target.files.length > 0) {
       setFileName(event.target.files[0].name);
@@ -42,10 +45,12 @@ const UploadFiles: React.FC<UploadFilesProps> = ({ audioFile, setAudioFile, elan
         // File uploaded successfully
         if (response.ok) {
           const data = await response.json();
+          setErrorTextElan('')
           dispatch(setTierList(data.tiers));
           dispatch(setElanData(data.elanData));
         }
         else {
+          setErrorTextElan('Error: wrong file format. You need a .eaf file.');
           // Handle error
           console.log('Error:', response.statusText);
         }
@@ -74,8 +79,10 @@ const UploadFiles: React.FC<UploadFilesProps> = ({ audioFile, setAudioFile, elan
           const data = await response.json();
           const fileUrl: string = data.file_url;
           dispatch(setFileUrl(fileUrl));
+          setErrorTextAudio('')
         }
         else {
+          setErrorTextAudio('Error: wrong file format. You need au audio file (for example .mp3, .wav).')
           console.log('Error:', response.statusText);
         }
 
@@ -90,8 +97,8 @@ const UploadFiles: React.FC<UploadFilesProps> = ({ audioFile, setAudioFile, elan
     <div className={styles['upload-section']}>
       <h3>Upload your audio file and its corresponding elan file:</h3>
       <div className={styles.container}>
-        <FileInput handleFileupload={handleAudioFileUpload} handleFileChange={(e) => handleFileChange(e, setAudioFileName, setAudioFile)} title='Audio' fileName={audioFileName} />
-        <FileInput handleFileupload={handleElanFileUpload} handleFileChange={(e) => handleFileChange(e, setElanFileName, setElanFile)} title='Eaf' fileName={elanFileName} />
+        <FileInput handleFileupload={handleAudioFileUpload} handleFileChange={(e) => handleFileChange(e, setAudioFileName, setAudioFile)} title='Audio' fileName={audioFileName} errorText={errorTextAudio} />
+        <FileInput handleFileupload={handleElanFileUpload} handleFileChange={(e) => handleFileChange(e, setElanFileName, setElanFile)} title='Eaf' fileName={elanFileName} errorText={errorTextElan}/>
       </div>
     </div>
   );
