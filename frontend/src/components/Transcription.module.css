@@ -3,20 +3,35 @@
     margin: 1.5rem 0;
     display: flex;
     flex-direction: column;
-    box-shadow: 7px 20px 20px #d2e3f4;
+    box-shadow: 0px 4px 5px -2px #d2e3f4;
 }
 
 .tier-container {
     display: flex;
     align-items: center;
+    border: 1px solid #ccc;
 }
+
+.tier-container:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .tier-container:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
 
 .tier-name {
     flex: 1;
     height: 2rem;
     overflow: hidden;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-right: 1px solid #ccc;
 }
 
 .tier-data-container {
@@ -26,7 +41,5 @@
     text-align: center;
     flex: 5;
     overflow: hidden;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     height: 2rem;
 }

@@ -28,11 +28,11 @@ const UploadFiles: React.FC<UploadFilesProps> = ({ audioFile, setAudioFile, elan
     }
   }
 
-
   const handleElanFileUpload: () => Promise<void> = async () => {
     if (elanFile) {
       const formData: FormData = new FormData();
       formData.append('file', elanFile);
+      formData.append('type', 'elan')
       try {
         const response: Response = await fetch(`${backendURL}/upload`, {
           method: 'POST',
@@ -62,7 +62,7 @@ const UploadFiles: React.FC<UploadFilesProps> = ({ audioFile, setAudioFile, elan
     if (audioFile) {
       const formData: FormData = new FormData();
       formData.append('file', audioFile);
-
+      formData.append('type', 'audio')
       try {
         const response: Response = await fetch(`${backendURL}/upload`, {
           method: 'POST',
